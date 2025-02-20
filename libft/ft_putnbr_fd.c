@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:31:36 by armarake         ###   ########.fr       */
+/*   Created: 2024/12/26 22:41:04 by armarake          #+#    #+#             */
+/*   Updated: 2024/12/26 22:41:04 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-
-void	exit_handler(char *msg);
-int		open_infile(char *filename);
-int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
-
-#endif
+void	ft_putnbr_fd(int n, int fd)
+{
+	if (n == -2147483648)
+	{
+		write(fd, "-2147483648", 11);
+		return ;
+	}
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		n = -n;
+	}
+	if (n > 9)
+		ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
+}

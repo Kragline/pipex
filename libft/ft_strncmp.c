@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:31:36 by armarake         ###   ########.fr       */
+/*   Created: 2024/12/04 14:35:49 by armarake          #+#    #+#             */
+/*   Updated: 2025/01/13 12:32:58 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned int	i;
 
-void	exit_handler(char *msg);
-int		open_infile(char *filename);
-int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
-
-#endif
+	if (n == 0)
+		return (0);
+	i = 0;
+	while ((i < n) && (s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}

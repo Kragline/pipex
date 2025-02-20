@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:31:36 by armarake         ###   ########.fr       */
+/*   Created: 2024/12/22 14:51:34 by armarake          #+#    #+#             */
+/*   Updated: 2025/01/14 15:05:34 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		s1len;
+	int		s2len;
+	char	*str;
 
-void	exit_handler(char *msg);
-int		open_infile(char *filename);
-int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
-
-#endif
+	if (!s1 || !s2)
+		return (NULL);
+	s1len = ft_strlen(s1);
+	s2len = ft_strlen(s2);
+	str = malloc(sizeof(char) * (s1len + s2len + 1));
+	if (!str)
+		return (NULL);
+	ft_memmove(str, s1, s1len);
+	ft_memmove(str + s1len, s2, s2len);
+	str[s1len + s2len] = '\0';
+	return (str);
+}

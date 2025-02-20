@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:31:36 by armarake         ###   ########.fr       */
+/*   Created: 2024/12/02 14:28:36 by armarake          #+#    #+#             */
+/*   Updated: 2024/12/02 14:28:36 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*temp;
 
-void	exit_handler(char *msg);
-int		open_infile(char *filename);
-int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
-
-#endif
+	i = 0;
+	temp = (unsigned char *)s;
+	while (i < n)
+	{
+		temp[i] = (unsigned char)c;
+		i++;
+	}
+	return (s);
+}

@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:31:36 by armarake         ###   ########.fr       */
+/*   Created: 2024/12/04 20:01:27 by armarake          #+#    #+#             */
+/*   Updated: 2025/01/13 14:22:48 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+int	ft_atoi(const char *str)
+{
+	int	sign;
+	int	res;
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-
-void	exit_handler(char *msg);
-int		open_infile(char *filename);
-int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
-
-#endif
+	sign = 1;
+	res = 0;
+	while (*str && (*str == 32 || (*str >= 9 && *str <= 13)))
+		str++;
+	if (*str == '-')
+	{
+		sign *= -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	while (*str && (*str >= '0' && *str <= '9'))
+	{
+		res = res * 10 + (*str - '0');
+		str++;
+	}
+	return (sign * res);
+}

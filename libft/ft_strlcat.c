@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:31:36 by armarake         ###   ########.fr       */
+/*   Created: 2024/12/03 21:22:40 by armarake          #+#    #+#             */
+/*   Updated: 2025/01/13 13:23:39 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	d_len;
+	size_t	s_len;
 
-void	exit_handler(char *msg);
-int		open_infile(char *filename);
-int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
-
-#endif
+	s_len = ft_strlen(src);
+	d_len = ft_strlen(dst);
+	if (!dstsize)
+		return (s_len);
+	if (d_len >= dstsize)
+		return (dstsize + s_len);
+	i = 0;
+	while (src[i] && d_len + i < dstsize - 1)
+	{
+		dst[d_len + i] = src[i];
+		i++;
+	}
+	dst[d_len + i] = '\0';
+	return (d_len + s_len);
+}

@@ -6,44 +6,69 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:27 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/19 18:45:01 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:36:59 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-int main(int argc, char *argv[], char *env[])
+void	execute_command(char *arg, char *env[])
 {
-	int pipefd[2];
-	pid_t pid;
-	
-	
-	char *g_args[] = {"grep", "f", NULL};
-	char *wc_args[] = {"wc", NULL};
+	char	**s_cmnd;
+	char	*path_to_cmnd;
 
-	pipe(pipefd);
+	s_cmnd = ft_split(arg, ' ');
+	path_to_cmnd = get_path(s_cmnd[0], env);
+	if (execv(path_to_cmnd, s_cmnd, env) == -1)
+	{
+		perror("pipex");
+		exit(1);
+	}
+}
 
+void	execve_child(char *argv[], int *pipefd, char *env[])
+{
+	int	infile;
+
+	infile = open_infile(argv[1]);
+	if (!infile)
+		exit(1);
+	dup2(infile, 0);
+	dup2(pipefd[1], 1);
+	close(pipefd[0]);
+	execute_command(argv[2], env);
+	close(infile);
+}
+
+void	execve_parent(char *argv[], int *pipefd, char *env[])
+{
+	int	outfile;
+
+	outfile = open_outfile(argv[4]);
+	if (!outfile)
+		exit(1);
+	dup2(outfile, 1);
+	dup2(pipefd[0], 0);
+	close(pipefd[1]);
+	execute_command(argv[3], env);
+	close(outfile);
+}
+
+int	main(int argc, char *argv[], char *env[])
+{
+	int		pipefd[2];
+	pid_t	pid;
+
+	if (argc != 5)
+		exit_handler("Wrong number of arguments");
+	if (pipe(pipefd) == -1)
+		exit_handler("Pipe failed");
 	pid = fork();
+	if (pid == -1)
+		exit_handler("Fork failed");
 	if (pid == 0)
-	{
-		int infile = open(argv[1], O_RDONLY);
-		dup2(infile, 0);
-		dup2(pipefd[1], 1);
-		close(pipefd[0]);
-		
-		execve("/usr/bin/grep", g_args, env);
-		perror("Error while executing grep");
-	}
+		execve_child(argv, pipefd, env);
 	else
-	{
-		int outfile = open(argv[2], O_WRONLY);
-		dup2(outfile, 1);
-		dup2(pipefd[0], 0);
-		close(pipefd[1]);
-
-		execve("/usr/bin/wc", wc_args, env);
-		perror("Error while executing wc");	
-	}
-	
+		execve_parent(argv, pipefd, env);
 	return (0);
 }

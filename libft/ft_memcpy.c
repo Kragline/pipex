@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:31:36 by armarake         ###   ########.fr       */
+/*   Created: 2024/12/02 19:12:26 by armarake          #+#    #+#             */
+/*   Updated: 2024/12/02 19:12:26 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned int	i;
+	unsigned char	*d_ptr;
+	unsigned char	*s_ptr;
 
-void	exit_handler(char *msg);
-int		open_infile(char *filename);
-int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
-
-#endif
+	if (!dest && !src)
+		return (NULL);
+	i = 0;
+	d_ptr = (unsigned char *)dest;
+	s_ptr = (unsigned char *)src;
+	while (i < n)
+	{
+		d_ptr[i] = s_ptr[i];
+		i++;
+	}
+	return (dest);
+}

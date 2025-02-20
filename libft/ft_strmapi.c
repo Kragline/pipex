@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft-strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:31:36 by armarake         ###   ########.fr       */
+/*   Created: 2024/12/26 22:13:06 by armarake          #+#    #+#             */
+/*   Updated: 2024/12/26 22:13:06 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	unsigned int	i;
+	unsigned int	len;
+	char			*res;
 
-void	exit_handler(char *msg);
-int		open_infile(char *filename);
-int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
-
-#endif
+	len = ft_strlen(s);
+	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		res[i] = f(i, s[i]);
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
