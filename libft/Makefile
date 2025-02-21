@@ -2,7 +2,7 @@ NAME = libft.a
 
 CC = cc
 
-CCFLAGS = -Wextra -Werror -Wall
+CCFLAGS = -Wall -Wextra -Werror
 
 SRCS = ft_atoi.c ft_isalpha.c ft_itoa.c ft_memmove.c ft_putnbr_fd.c \
 	ft_strdup.c ft_strlcpy.c ft_strnstr.c ft_tolower.c \
@@ -16,17 +16,17 @@ BONUS = ft_lstadd_front_bonus.c ft_lstnew_bonus.c ft_lstlast_bonus.c \
 	ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c \
 	ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
 
-OBJS := $(SRCS:%.c=%.o)
+OBJS = $(SRCS:%.c=%.o)
 
 BONUS_OBJS = $(BONUS:%.c=%.o)
-
-%.o: %.c Makefile libft.h
-	$(CC) $(CCFLAGS) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
+
+%.o: %.c Makefile libft.h
+	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS) $(BONUS_OBJS)

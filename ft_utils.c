@@ -31,7 +31,7 @@ int	open_infile(char *filename)
 		perror("pipex");
 		return (0);
 	}
-	return(open(filename, O_RDONLY));
+	return (open(filename, O_RDONLY));
 }
 
 int	open_outfile(char *filename)
