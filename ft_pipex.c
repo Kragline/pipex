@@ -18,10 +18,11 @@ void	execute_command(char *arg, char *env[])
 	char	*path_to_cmnd;
 
 	s_cmnd = ft_split(arg, ' ');
-	path_to_cmnd = get_path(s_cmnd[0], env);
-	if (execv(path_to_cmnd, s_cmnd, env) == -1)
+	path_to_cmnd = get_full_path(s_cmnd[0], env);
+	if (execve(path_to_cmnd, s_cmnd, env) == -1)
 	{
-		perror("pipex");
+		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putendl_fd(s_cmnd[0], 2);
 		exit(1);
 	}
 }
@@ -37,7 +38,6 @@ void	execve_child(char *argv[], int *pipefd, char *env[])
 	dup2(pipefd[1], 1);
 	close(pipefd[0]);
 	execute_command(argv[2], env);
-	close(infile);
 }
 
 void	execve_parent(char *argv[], int *pipefd, char *env[])
@@ -51,7 +51,6 @@ void	execve_parent(char *argv[], int *pipefd, char *env[])
 	dup2(pipefd[0], 0);
 	close(pipefd[1]);
 	execute_command(argv[3], env);
-	close(outfile);
 }
 
 int	main(int argc, char *argv[], char *env[])
@@ -70,5 +69,5 @@ int	main(int argc, char *argv[], char *env[])
 		execve_child(argv, pipefd, env);
 	else
 		execve_parent(argv, pipefd, env);
-	return (0);
+	system("leaks pipex");
 }

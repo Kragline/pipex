@@ -23,6 +23,6 @@
 void	exit_handler(char *msg);
 int		open_infile(char *filename);
 int		open_outfile(char *filename);
-char	*get_path(char *cmnd, char *env[]);
+char	*get_full_path(char *cmnd, char *env[]);
 
 #endif
