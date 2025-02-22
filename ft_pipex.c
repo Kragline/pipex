@@ -69,5 +69,4 @@ int	main(int argc, char *argv[], char *env[])
 		execve_child(argv, pipefd, env);
 	else
 		execve_parent(argv, pipefd, env);
-	system("leaks pipex");
 }

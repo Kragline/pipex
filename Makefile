@@ -18,7 +18,6 @@ $(LIBFT):
 
 clean:
 	make -C libft clean
-	rm -f $(OBJS)
 
 fclean: clean
 	make -C libft fclean
