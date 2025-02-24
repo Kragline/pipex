@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/24 15:13:43 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/24 22:56:13 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h>
 # include "libft/libft.h"
 
-void	exit_handler(char *msg);
+void	ft_free_tab(char **tab);
 int		open_infile(char *filename);
 int		open_outfile(char *filename);
 char	*get_full_path(char *cmnd, char *env[]);

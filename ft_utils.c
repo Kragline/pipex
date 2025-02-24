@@ -6,16 +6,23 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:35:36 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/24 14:48:53 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:02:03 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-void	exit_handler(char *msg)
+void	ft_free_tab(char **tab)
 {
-	ft_putendl_fd(msg, 2);
-	exit(1);
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 int	open_infile(char *filename)
@@ -79,9 +86,12 @@ char	*get_full_path(char *cmnd, char *env[])
 	{
 		temp = ft_strjoin(*s_paths, "/");
 		final_path = ft_strjoin(temp, cmnd);
+		free(temp);
 		if (access(final_path, F_OK | X_OK) == 0)
 			return (final_path);
+		free(final_path);
 		s_paths++;
 	}
+	ft_free_tab(s_paths);
 	return (NULL);
 }

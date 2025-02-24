@@ -21,6 +21,8 @@ void	execute_command(char *arg, char *env[])
 	path_to_cmnd = get_full_path(s_cmnd[0], env);
 	if (execve(path_to_cmnd, s_cmnd, env) == -1)
 	{
+		free(path_to_cmnd);
+		ft_free_tab(s_cmnd);
 		ft_putstr_fd("pipex: command not found: ", 2);
 		ft_putendl_fd(s_cmnd[0], 2);
 		exit(1);
@@ -36,7 +38,9 @@ void	execve_child(char *argv[], int *pipefd, char *env[])
 		exit(1);
 	dup2(infile, 0);
 	dup2(pipefd[1], 1);
+	close(infile);
 	close(pipefd[0]);
+	close(pipefd[1]);
 	execute_command(argv[2], env);
 }
 
@@ -49,6 +53,8 @@ void	execve_parent(char *argv[], int *pipefd, char *env[])
 		exit(1);
 	dup2(outfile, 1);
 	dup2(pipefd[0], 0);
+	close(outfile);
+	close(pipefd[0]);
 	close(pipefd[1]);
 	execute_command(argv[3], env);
 }
@@ -59,12 +65,21 @@ int	main(int argc, char *argv[], char *env[])
 	pid_t	pid;
 
 	if (argc != 5)
-		exit_handler("Wrong number of arguments");
+	{
+		ft_putendl_fd("Wrong number of arguments", 2);
+		exit(1);
+	}
 	if (pipe(pipefd) == -1)
-		exit_handler("Pipe failed");
+	{
+		ft_putendl_fd("Pipe failed", 2);
+		exit(1);
+	}
 	pid = fork();
 	if (pid == -1)
-		exit_handler("Fork failed");
+	{
+		ft_putendl_fd("Fork failed", 2);
+		exit(1);
+	}
 	if (pid == 0)
 		execve_child(argv, pipefd, env);
 	waitpid(pid, NULL, 0);
