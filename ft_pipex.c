@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:27 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/24 14:48:21 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:49:14 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ int	main(int argc, char *argv[], char *env[])
 		exit_handler("Fork failed");
 	if (pid == 0)
 		execve_child(argv, pipefd, env);
-	else
-	{
-		waitpid(pid, NULL, WNOHANG);
-		execve_parent(argv, pipefd, env);
-	}
+	waitpid(pid, NULL, 0);
+	execve_parent(argv, pipefd, env);
 }
