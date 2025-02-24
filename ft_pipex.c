@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:27 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/20 16:36:59 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:57:12 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	execve_child(char *argv[], int *pipefd, char *env[])
 	int	infile;
 
 	infile = open_infile(argv[1]);
-	if (!infile)
+	if (infile == -1)
 		exit(1);
 	dup2(infile, 0);
 	dup2(pipefd[1], 1);
@@ -45,7 +45,7 @@ void	execve_parent(char *argv[], int *pipefd, char *env[])
 	int	outfile;
 
 	outfile = open_outfile(argv[4]);
-	if (!outfile)
+	if (outfile == -1)
 		exit(1);
 	dup2(outfile, 1);
 	dup2(pipefd[0], 0);
@@ -68,5 +68,8 @@ int	main(int argc, char *argv[], char *env[])
 	if (pid == 0)
 		execve_child(argv, pipefd, env);
 	else
+	{
+		waitpid(pid, NULL, WNOHANG);
 		execve_parent(argv, pipefd, env);
+	}
 }

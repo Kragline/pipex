@@ -10,7 +10,7 @@ LIBFT = libft/libft.a
 
 all: $(NAME)
 
-$(NAME): Makefile ft_pipex.h $(LIBFT)
+$(NAME): Makefile ft_pipex.h $(LIBFT) $(SRCS)
 	$(CC) $(CCFLAGS) $(SRCS) $(LIBFT) -o pipex
 
 $(LIBFT):
