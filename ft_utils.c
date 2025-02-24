@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:35:36 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/24 13:40:52 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:48:53 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	open_infile(char *filename)
 	{
 		ft_putstr_fd("pipex: no such file or directory: ", 2);
 		ft_putendl_fd(filename, 2);
-		return (0);
+		return (-1);
 	}
 	if (access(filename, R_OK) != 0)
 	{
 		ft_putstr_fd("pipex: permission denied: ", 2);
 		ft_putendl_fd(filename, 2);
-		return (0);
+		return (-1);
 	}
 	return (open(filename, O_RDONLY));
 }
@@ -43,7 +43,7 @@ int	open_outfile(char *filename)
 	{
 		ft_putstr_fd("pipex: permission denied: ", 2);
 		ft_putendl_fd(filename, 2);
-		return (0);
+		return (-1);
 	}
 	return (open(filename, O_WRONLY | O_TRUNC));
 }
