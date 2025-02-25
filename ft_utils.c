@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:35:36 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/24 23:02:03 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:10:13 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_free_tab(char **tab)
 {
 	int	i;
 
+	if (!*tab)
+		return ;
 	i = 0;
 	while (tab[i])
 	{
