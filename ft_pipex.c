@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:27 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/25 13:43:07 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:57:18 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	execute_command(char *arg, char *env[])
 	path_to_cmnd = get_full_path(s_cmnd[0], env);
 	if (execve(path_to_cmnd, s_cmnd, env) == -1)
 	{
-		free(path_to_cmnd);
-		ft_free_tab(s_cmnd);
 		ft_putstr_fd("pipex: command not found: ", 2);
 		ft_putendl_fd(s_cmnd[0], 2);
+		ft_free_tab(s_cmnd);
+		free(path_to_cmnd);
 		exit(1);
 	}
 }
