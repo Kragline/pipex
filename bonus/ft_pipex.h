@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/02/24 22:56:13 by armarake         ###   ########.fr       */
+/*   Updated: 2025/03/12 00:24:07 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 void	ft_free_tab(char **tab);
 int		open_infile(char *filename);
