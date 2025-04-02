@@ -6,33 +6,21 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:27 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 17:27:51 by armarake         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:33:41 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-static void	check_command(char *path, char **s_cmnd, char **env)
+static void	execute_script(char **s_cmnd, char **env)
 {
-	if (access(path, F_OK) == -1)
+	if (access(s_cmnd[0], F_OK) == -1)
+		execution_error(s_cmnd, "no such file or directory");
+	if (access(s_cmnd[0], X_OK) == -1)
+		execution_error(s_cmnd, "permission denied");
+	if (execve(s_cmnd[0], s_cmnd, env) == -1)
 	{
-		ft_putstr_fd("pipex: no such file or directory: ", 2);
-		ft_putendl_fd(path, 2);
 		ft_free_tab(s_cmnd);
-		exit(1);
-	}
-	if (access(path, X_OK) == -1)
-	{
-		ft_putstr_fd("pipex: permission denied: ", 2);
-		ft_putendl_fd(path, 2);
-		ft_free_tab(s_cmnd);
-		exit(1);
-	}
-	if (execve(path, s_cmnd, env) == -1)
-	{
-		ft_putstr_fd("pipex: execution failed: ", 2);
-		ft_free_tab(s_cmnd);
-		free(path);
 		exit(1);
 	}
 }
@@ -50,19 +38,19 @@ static void	execute_command(char *arg, char *env[])
 		exit(1);
 	}
 	if (ft_strchr(s_cmnd[0], '/'))
-		path_to_cmnd = s_cmnd[0];
+		execute_script(s_cmnd, env);
 	else
 	{
 		path_to_cmnd = get_full_path(s_cmnd[0], env);
-		if (!path_to_cmnd)
+		if (execve(path_to_cmnd, s_cmnd, env) == -1)
 		{
 			ft_putstr_fd("pipex: command not found: ", 2);
 			ft_putendl_fd(s_cmnd[0], 2);
 			ft_free_tab(s_cmnd);
+			free(path_to_cmnd);
 			exit(1);
 		}
 	}
-	check_command(path_to_cmnd, s_cmnd, env);
 }
 
 static void	execve_child(char *argv[], int *pipefd, char *env[])
@@ -80,7 +68,7 @@ static void	execve_child(char *argv[], int *pipefd, char *env[])
 	execute_command(argv[2], env);
 }
 
-static void	execve_parent(char *argv[], int *pipefd, char *env[])
+static void	execve_child2(char *argv[], int *pipefd, char *env[])
 {
 	int	outfile;
 
@@ -116,6 +104,10 @@ int	main(int argc, char *argv[], char *env[])
 	if (proc_id2 == -1)
 		return (ft_putendl_fd("Fork failed", 2), 1);
 	if (proc_id2 == 0)
-		execve_parent(argv, pipefd, env);
+		execve_child2(argv, pipefd, env);
+	close(pipefd[0]);
+	close(pipefd[1]);
+	waitpid(proc_id, NULL, 0);
+	waitpid(proc_id2, NULL, 0);
 	return (0);
 }

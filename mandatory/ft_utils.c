@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:35:36 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 17:42:37 by armarake         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:34:23 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,14 @@ void	empty_command(char *command)
 		ft_putendl_fd("pipex: empty command", 2);
 		exit (1);
 	}
+}
+
+void	execution_error(char **s_cmnd, char *message)
+{
+	ft_putstr_fd("pipex: ", 2);
+	ft_putstr_fd(message, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(s_cmnd[0], 2);
+	ft_free_tab(s_cmnd);
+	exit(1);
 }

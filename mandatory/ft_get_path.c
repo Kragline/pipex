@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:30:11 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 17:25:01 by armarake         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:09:36 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,22 @@ char	*path_from_env(char *env[])
 
 char	*get_full_path(char *cmnd, char *env[])
 {
+	int		i;
 	char	*temp;
 	char	*final_path;
 	char	**s_paths;
 
+	i = 0;
 	s_paths = ft_split(path_from_env(env), ':');
-	while (*s_paths)
+	while (s_paths[i])
 	{
-		temp = ft_strjoin(*s_paths, "/");
+		temp = ft_strjoin(s_paths[i], "/");
 		final_path = ft_strjoin(temp, cmnd);
 		free(temp);
 		if (access(final_path, F_OK | X_OK) == 0)
-			return (final_path);
+			return (ft_free_tab(s_paths), final_path);
 		free(final_path);
-		s_paths++;
+		i++;
 	}
 	ft_free_tab(s_paths);
 	return (NULL);

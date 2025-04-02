@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:27 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 17:40:59 by armarake         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:43:56 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	do_pipe(char *arg, char *env[])
 	}
 	if (pid == 0)
 		child_process(arg, pipefd, env);
+	waitpid(pid, NULL, 0);
 	parent_process(pipefd);
 }
 

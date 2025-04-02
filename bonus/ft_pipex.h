@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 17:41:53 by armarake         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:38:10 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	empty_command(char *command);
 void	child_process(char *arg, int *pipefd, char *env[]);
 void	parent_process(int *pipefd);
 void	execute_command(char *arg, char *env[]);
+void	execution_error(char **s_cmnd, char *message);
 
 #endif

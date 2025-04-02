@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 17:26:04 by armarake         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:33:52 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		open_outfile(char *filename);
 char	*path_from_env(char *env[]);
 char	*get_full_path(char *cmnd, char *env[]);
 void	empty_command(char *command);
+void	execution_error(char **s_cmnd, char *message);
 
 #endif
