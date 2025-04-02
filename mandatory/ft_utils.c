@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:35:36 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 17:01:27 by armarake         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:42:37 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ void	empty_command(char *command)
 	if (!command || !*command)
 	{
 		ft_putendl_fd("pipex: empty command", 2);
-		exit (1);	
+		exit (1);
 	}
 }

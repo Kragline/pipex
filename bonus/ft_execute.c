@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:04:27 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 17:27:51 by armarake         ###   ########.fr       */
+/*   Created: 2025/04/02 17:34:50 by armarake          #+#    #+#             */
+/*   Updated: 2025/04/02 17:41:45 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	check_command(char *path, char **s_cmnd, char **env)
 	}
 }
 
-static void	execute_command(char *arg, char *env[])
+void	execute_command(char *arg, char *env[])
 {
 	char	**s_cmnd;
 	char	*path_to_cmnd;
@@ -65,57 +65,17 @@ static void	execute_command(char *arg, char *env[])
 	check_command(path_to_cmnd, s_cmnd, env);
 }
 
-static void	execve_child(char *argv[], int *pipefd, char *env[])
+void	child_process(char *arg, int *pipefd, char *env[])
 {
-	int	infile;
-
-	infile = open_infile(argv[1]);
-	if (infile == -1)
-		exit(1);
-	dup2(infile, 0);
 	dup2(pipefd[1], 1);
-	close(infile);
 	close(pipefd[0]);
 	close(pipefd[1]);
-	execute_command(argv[2], env);
+	execute_command(arg, env);
 }
 
-static void	execve_parent(char *argv[], int *pipefd, char *env[])
+void	parent_process(int *pipefd)
 {
-	int	outfile;
-
-	outfile = open_outfile(argv[4]);
-	if (outfile == -1)
-		exit(1);
-	dup2(outfile, 1);
 	dup2(pipefd[0], 0);
-	close(outfile);
 	close(pipefd[0]);
 	close(pipefd[1]);
-	execute_command(argv[3], env);
-}
-
-int	main(int argc, char *argv[], char *env[])
-{
-	int		pipefd[2];
-	pid_t	proc_id;
-	pid_t	proc_id2;
-
-	if (argc != 5)
-		return (ft_putendl_fd("Wrong number of arguments", 2), 1);
-	if (!path_from_env(env))
-		return (ft_putendl_fd("Path variable was not found", 2), 1);
-	if (pipe(pipefd) == -1)
-		return (ft_putendl_fd("Pipe failed", 2), 1);
-	proc_id = fork();
-	if (proc_id == -1)
-		return (ft_putendl_fd("Fork failed", 2), 1);
-	if (proc_id == 0)
-		execve_child(argv, pipefd, env);
-	proc_id2 = fork();
-	if (proc_id2 == -1)
-		return (ft_putendl_fd("Fork failed", 2), 1);
-	if (proc_id2 == 0)
-		execve_parent(argv, pipefd, env);
-	return (0);
 }

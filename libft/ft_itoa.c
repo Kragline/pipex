@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 20:45:36 by armarake          #+#    #+#             */
-/*   Updated: 2025/01/14 16:54:44 by armarake         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:52:02 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static int	num_len(int n)
 char	*ft_itoa(int n)
 {
 	int		len;
-	int		temp;
 	char	*res;
 
 	if (n == 0)
@@ -50,10 +49,10 @@ char	*ft_itoa(int n)
 		res[0] = '-';
 	}
 	res[len] = '\0';
+	len--;
 	while (n)
 	{
-		temp = n % 10;
-		res[len-- -1] = temp + '0';
+		res[len--] = n % 10 + '0';
 		n /= 10;
 	}
 	return (res);

@@ -2,17 +2,15 @@ NAME = pipex
 
 CC = cc
 
-CCFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CCFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 MANDATORY = mandatory/
 BONUS = bonus/
 FILENAMES = pipex utils get_path
+BONUS_FILENAMES = pipex utils get_path execute
 
-PREFIX_FILENAMES = $(addprefix $(MANDATORY)ft_, $(FILENAMES))
-SRCS = $(addsuffix .c, $(PREFIX_FILENAMES))
-
-PREFIX_BONUS = $(addprefix $(BONUS)ft_, $(FILENAMES))
-BONUS_SRCS = $(addsuffix .c, $(PREFIX_BONUS))
+SRCS = $(addsuffix .c, $(addprefix $(MANDATORY)ft_, $(FILENAMES)))
+BONUS_SRCS = $(addsuffix .c, $(addprefix $(BONUS)ft_, $(BONUS_FILENAMES)))
 
 LIBFT = libft/libft.a
 

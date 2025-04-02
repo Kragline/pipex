@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:04:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/04/02 16:38:57 by armarake         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:26:04 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 void	ft_free_tab(char **tab);
 int		open_infile(char *filename);
 int		open_outfile(char *filename);
+char	*path_from_env(char *env[]);
 char	*get_full_path(char *cmnd, char *env[]);
 void	empty_command(char *command);
 

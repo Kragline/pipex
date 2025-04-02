@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:01:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/01/18 15:22:26 by armarake         ###   ########.fr       */
+/*   Updated: 2025/03/01 00:32:54 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 typedef struct s_list
 {
@@ -22,6 +23,13 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+int		ft_printf(const char *str, ...);
+size_t	byte_putchar(char chr);
+size_t	byte_putstr(char *str);
+size_t	byte_putnbr(int nbr);
+size_t	byte_puthex(unsigned long long nbr, int upper);
+size_t	byte_putpointer(unsigned long long nbr);
+size_t	byte_putunsigned(unsigned int nbr);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
