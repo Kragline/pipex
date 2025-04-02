@@ -2,11 +2,11 @@ NAME = pipex
 
 CC = cc
 
-CCFLAGS = -Wall -Wextra -Werror
+CCFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 MANDATORY = mandatory/
 BONUS = bonus/
-FILENAMES = pipex utils
+FILENAMES = pipex utils get_path
 
 PREFIX_FILENAMES = $(addprefix $(MANDATORY)ft_, $(FILENAMES))
 SRCS = $(addsuffix .c, $(PREFIX_FILENAMES))
@@ -19,20 +19,20 @@ LIBFT = libft/libft.a
 all: $(NAME)
 
 $(NAME): $(MANDATORY)ft_pipex.h $(LIBFT) $(SRCS)
-	$(CC) $(CCFLAGS) -I$(MANDATORY) $(SRCS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CCFLAGS) -I$(MANDATORY) $(SRCS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
-	make -C libft
+	@make -sC libft
 
 bonus: $(BONUS)ft_pipex.h $(LIBFT) $(BONUS_SRCS)
-	$(CC) $(CCFLAGS) -I$(BONUS) $(BONUS_SRCS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CCFLAGS) -I$(BONUS) $(BONUS_SRCS) $(LIBFT) -o $(NAME)
 
 clean:
-	make -C libft clean
+	@make -sC libft clean
 
 fclean: clean
-	make -C libft fclean
-	rm -f $(NAME)
+	@make -sC libft fclean
+	@rm -f $(NAME)
 
 re: fclean all
 
